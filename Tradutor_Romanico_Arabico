@@ -1,0 +1,35 @@
+{-Crie um programa em Haskell que leia um arquivo "romano.txt" onde cada linha possui um número romano e deve gerar um arquivo "arabico.txt" que contém a conversão de cada número romano do arquivo de entrada em um número arábico (sistema numérico que utilizamos) ao longo de suas linhas.
+
+Os romanos escreviam números usando as letras I, V, X, L, C, D, M.
+
+ 1  => I
+10  => X
+ 7  => VII
+Assuma que os números a serem convertidos vão de 0 até 3000. Pesquise na Internet as regras para as numerações romanas (por exemplo, em http://www.novaroma.org/via_romana/numbers.html). Abaixo segue algumas conversões:
+
+O número 1990 é MCMXC: 
+
+1000=M 900=CM 90=XC
+
+2008 é escrito como MMVIII:
+
+2000=MM 8=VIII
+
+Dica: implemente uma função "numeral" que talvez (tipo Maybe) converta um numeral romano para uma String representando o número arábico. -}
+import Data.List (isPrefixOf)
+{- A funcao de manipular o arquivo nao funciona pq o writeFile espera um String e nao um Int que eh o que eh retornado no paraArabico 
+manipulaArquivo = do 
+                      a <- readFile "romano.txt" --Colocar o arquivo de texto no diretorio onde seu ghci se encontra
+                      writeFile "arabico.txt" (paraArabico(a)) -- O arquivo arabico vai aparecer onde o seu ghci esta
+-}
+
+            
+
+
+mapa = [("M",1000),("CM",900),("D",500),("CD",400),("C",100),("XC",90),
+           ("L",50),("XL",40),("X",10),("IX",9),("V",5),("IV",4),("I",1)]
+ 
+paraArabico :: String -> Int
+paraArabico "" = 0
+paraArabico str = num + paraArabico xs
+    where (num, xs):_ = [ (num, drop (length n) str) | (n,num) <- mapa, isPrefixOf n str ]
